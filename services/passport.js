@@ -17,6 +17,7 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: "/auth/google/callback",
+      proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleID: profile.id }).then((existingUser) => {
@@ -39,6 +40,7 @@ passport.use(
       clientID: keys.FACEBOOK_APP_ID,
       clientSecret: keys.FACEBOOK_APP_SECRET,
       callbackURL: "/auth/facebook/callback",
+      proxy: true,
     },
     function (accessToken, refreshToken, profile, done) {
       User.findOne({ facebookId: profile.id }).then((existingUser) => {
@@ -50,7 +52,6 @@ passport.use(
           new User({ facebookId: profile.id })
             .save()
             .then((user) => done(null, user));
-          console.loh(profile);
         }
       });
     }
